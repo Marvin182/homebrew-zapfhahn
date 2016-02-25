@@ -2,8 +2,8 @@ class PfileUtils < Formula
   desc "Collection of utilities for manipulating PFiles (ICSI feature file)"
   homepage "http://www1.icsi.berkeley.edu/Speech/qn.html"
 
-  url "https://github.com/Marvin182/pfile-utilities/archive/v0.51.tar.gz"
-  sha256 "151bb83af1c06a7168908d8440ebb15f880de360d7f292f41716fa84b520301a"
+  url "https://github.com/Marvin182/pfile-utilities/archive/v0.52.tar.gz"
+  sha256 "e4a0631458c28c5c0a9f5b8d4e76959dda1a829867f3ee89b0a284670288151a"
   head "https://github.com/Marvin182/pfile-utilities.git"
 
   depends_on "quicknet"
