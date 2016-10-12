@@ -3,6 +3,7 @@ class PfileUtils < Formula
   homepage "http://www1.icsi.berkeley.edu/Speech/qn.html"
 
   url "https://github.com/Marvin182/pfile-utilities/archive/v0.52.tar.gz"
+  version "0.52"
   sha256 "e4a0631458c28c5c0a9f5b8d4e76959dda1a829867f3ee89b0a284670288151a"
   head "https://github.com/Marvin182/pfile-utilities.git"
 
