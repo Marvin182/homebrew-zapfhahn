@@ -21,7 +21,7 @@ class Sqlpp11 < Formula
     end
   end
 
-  option "with-sqite3", "Build with the connector for sqlite3"
+  option "with-sqlite3", "Build with the connector for sqlite3"
 
   depends_on "date"
   depends_on "cmake" => :build
@@ -40,10 +40,8 @@ class Sqlpp11 < Formula
       resource("connector-sqlite3").stage do
         args = std_cmake_args
         args << "-DDATE_INCLUDE_DIR=#{HOMEBREW_PREFIX}/include/date"
-        args << "-DSQLPP11_INCLUDE_DIR=#{HOMEBREW_PREFIX}/include"
+        args << "-DSQLPP11_INCLUDE_DIR=" + include
 
-        puts include
-        puts bin
         mkdir "build" do
           system "cmake", "..", *args
           system "make", "install"
