@@ -7,6 +7,10 @@ class Sqlpp11 < Formula
     url "https://github.com/rbock/sqlpp11/archive/0.43.tar.gz"
     sha256 "473cb35c47ea2960c224fe49173581d243eb8b25ab0fcff85ef540e6df7e8abc"
 
+    resource "connector-mysql" do
+      url "https://github.com/rbock/sqlpp11-connector-mysql/archive/0.20.tar.gz"
+      sha256 "ef5495c29519bf956e49c09631ca31bbb2d06c4d44d9e1931f38ab7b653961b3"
+    end
     resource "connector-sqlite3" do
       url "https://github.com/rbock/sqlpp11-connector-sqlite3/archive/0.23.tar.gz"
       sha256 "4e00bdd5c873895d58346b3a503cc5b2222c3f918d45afe8e22be6ad997c3461"
@@ -16,15 +20,21 @@ class Sqlpp11 < Formula
   head do
     url "https://github.com/rbock/sqlpp11.igt"
 
+    resource "connector-mysql" do
+      url "https://github.com/rbock/sqlpp11-connector-mysql.git"
+    end
     resource "connector-sqlite3" do
       url "https://github.com/agda/agda-connector-sqlite3.git"
     end
   end
 
+  option "with-mysql", "Build with the connector for mysql"
   option "with-sqlite3", "Build with the connector for sqlite3"
 
   depends_on "date"
   depends_on "cmake" => :build
+  depends_on "mysql" => :build if build.with? "mysql"
+  depends_on "boost" => :build if build.with? "mysql"
 
   def install
     # install core library
@@ -35,7 +45,19 @@ class Sqlpp11 < Formula
       system "make", "install"
     end
 
-    # install sqlite connector
+    if build.with? "mysql"
+      resource("connector-mysql").stage do
+        args = std_cmake_args
+        args << "-DDATE_INCLUDE_DIR=#{HOMEBREW_PREFIX}/include/date"
+        args << "-DSQLPP11_INCLUDE_DIR=" + include
+
+        mkdir "build" do
+          system "cmake", "..", *args
+          system "make", "install"
+        end
+      end
+    end
+
     if build.with? "sqlite3"
       resource("connector-sqlite3").stage do
         args = std_cmake_args
@@ -48,5 +70,6 @@ class Sqlpp11 < Formula
         end
       end
     end
+
   end
 end
