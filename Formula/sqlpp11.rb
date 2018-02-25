@@ -4,16 +4,16 @@ class Sqlpp11 < Formula
   homepage "https://github.com/rbock/sqlpp11"
 
   stable do
-    url "https://github.com/rbock/sqlpp11/archive/0.43.tar.gz"
-    sha256 "473cb35c47ea2960c224fe49173581d243eb8b25ab0fcff85ef540e6df7e8abc"
+    url "https://github.com/rbock/sqlpp11/archive/0.54.tar.gz"
+    sha256 "107e2e8ae6c37ba8db2aa1c290708ac6b651f9597c5619af6e2b84bbc5ab74e1"
 
     resource "connector-mysql" do
-      url "https://github.com/rbock/sqlpp11-connector-mysql/archive/0.20.tar.gz"
-      sha256 "ef5495c29519bf956e49c09631ca31bbb2d06c4d44d9e1931f38ab7b653961b3"
+      url "https://github.com/rbock/sqlpp11-connector-mysql/archive/0.23.tar.gz"
+      sha256 "4fa2d32dc22e40585c14434fa600e0dcad61740d54ab749afaeab5cd6c926e59"
     end
     resource "connector-sqlite3" do
-      url "https://github.com/rbock/sqlpp11-connector-sqlite3/archive/0.23.tar.gz"
-      sha256 "4e00bdd5c873895d58346b3a503cc5b2222c3f918d45afe8e22be6ad997c3461"
+      url "https://github.com/rbock/sqlpp11-connector-sqlite3/archive/0.28.tar.gz"
+      sha256 "a51845b2990bddb72e091140c8dd05204661ff8d94cf189041a1c3c63bfd96cb"
     end
   end
 
@@ -40,7 +40,6 @@ class Sqlpp11 < Formula
     # install core library
     mkdir "build" do
       args = std_cmake_args
-      args << "-DHinnantDate_ROOT_DIR=#{HOMEBREW_PREFIX}/include/date"
       system "cmake", "..", *args
       system "make", "install"
     end
@@ -61,7 +60,6 @@ class Sqlpp11 < Formula
     if build.with? "sqlite3"
       resource("connector-sqlite3").stage do
         args = std_cmake_args
-        args << "-DDATE_INCLUDE_DIR=#{HOMEBREW_PREFIX}/include/date"
         args << "-DSQLPP11_INCLUDE_DIR=" + include
 
         mkdir "build" do
